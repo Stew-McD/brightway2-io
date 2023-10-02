@@ -8,6 +8,8 @@ import os
 import pyprind
 import sys
 
+# Make it play nice with super computer clusters (replaced also <num_cpus> with <num_cpus>
+num_cpus = int(os.environ.get('SLURM_CPUS_PER_TASK', 'SLURM_JOB_CPUS_PER_NODE', num_cpus))
 
 PM_MAPPING = {
     "reliability": "reliability",
@@ -75,7 +77,7 @@ class Ecospold2DataExtractor(object):
             use_mp = False
 
         if use_mp:
-            with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+            with multiprocessing.Pool(num_cpus) as pool:
                 print("Extracting XML data from {} datasets".format(len(filelist)))
                 results = [
                     pool.apply_async(
