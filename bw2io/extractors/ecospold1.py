@@ -10,8 +10,10 @@ import os
 import pyprind
 import sys
 
-# Make it play nice with super computer clusters (replaced also <num_cpus> with <num_cpus>
-num_cpus = int(os.environ.get('SLURM_CPUS_PER_TASK', os.environ.get('SLURM_JOB_CPUS_PER_NODE', multiprocessing.cpu_count())))
+# Make it play nice with super computer clusters\
+# (replaced also <num_cpus> with <num_cpus>
+num_cpus = int(os.environ.get('SLURM_CPUS_PER_TASK', \
+    os.environ.get('SLURM_JOB_CPUS_PER_NODE', multiprocessing.cpu_count())))
 
 def getattr2(obj, attr):
     try:
